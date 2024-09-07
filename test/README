@@ -1,0 +1,63 @@
+
+This directory is intended for PlatformIO Test Runner and project tests.
+
+Unit Testing is a software testing method by which individual units of
+source code, sets of one or more MCU program modules together with associated
+control data, usage procedures, and operating procedures, are tested to
+determine whether they are fit for use. Unit testing finds problems early
+in the development cycle.
+
+More information about PlatformIO Unit Testing:
+- https://docs.platformio.org/en/latest/advanced/unit-testing/index.html
+
+void manageSSR() {
+  if (ssrOnDelayActive && (millis() - ssrOnDelayStart >= 3000)) {
+    ssrRelayState = HIGH;
+    digitalWrite(ssrRelay, ssrRelayState);
+    ssrOnTime = millis();
+    ssrTimerActive = true;
+    ssrOnDelayActive = false;
+  }
+}
+
+void manageRelayTimers() {
+  if (relayTimerActive && (millis() - relayOnTime >= 65000)) {
+    relay1State = LOW;
+    relay2State = LOW;
+    relay3State = LOW;
+    relay4State = LOW;
+
+    digitalWrite(relay1, relay1State);
+    digitalWrite(relay2, relay2State);
+    digitalWrite(relay3, relay3State);
+    digitalWrite(relay4, relay4State);
+
+    relayTimerActive = false;
+    buzzForOneSecond();
+  }
+
+  if (ssrTimerActive && (millis() - ssrOnTime >= 60000)) {
+    ssrRelayState = LOW;
+    digitalWrite(ssrRelay, ssrRelayState);
+    ssrTimerActive = false;
+  }
+}
+
+void resetSystem() {
+  relay1State = LOW;
+  relay2State = LOW;
+  relay3State = LOW;
+  relay4State = LOW;
+  ssrRelayState = LOW;
+
+  digitalWrite(relay1, relay1State);
+  digitalWrite(relay2, relay2State);
+  digitalWrite(relay3, relay3State);
+  digitalWrite(relay4, relay4State);
+  digitalWrite(ssrRelay, ssrRelayState);
+
+  relayTimerActive = false;
+  ssrTimerActive = false;
+  ssrOnDelayActive = false;
+  relayOffDelayActive = false;
+}
