@@ -138,9 +138,9 @@ void setup() {
   lcd.init();
   lcd.backlight();
   lcd.setCursor(0, 0);
-  lcd.print("Humidity: ");
-  lcd.setCursor(0, 1);
-  lcd.print("Temp: ");
+  lcd.print("H: ");
+  lcd.setCursor(8, 0);
+  lcd.print("T: ");
 
   // Initialize WiFi and Blynk
   Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
@@ -179,11 +179,11 @@ void loop() {
     lcd.setCursor(0, 0);
     lcd.print("Error reading");
   } else {
-    lcd.setCursor(9, 0);
+    lcd.setCursor(2, 0);
     lcd.print(humidity);
     lcd.print("%");
     
-    lcd.setCursor(6, 1);
+    lcd.setCursor(10, 0);
     lcd.print(temperature);
     lcd.print("C");
   }
